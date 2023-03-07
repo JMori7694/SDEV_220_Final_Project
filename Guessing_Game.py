@@ -6,8 +6,6 @@
 # Wins and loses for each level will be put into lists to display upon ending the game
 
 import random
-<<<<<<< Updated upstream
-=======
 # Medium 1-50
 
 
@@ -388,4 +386,5 @@ def start_hard():
         except ValueError as err:
             print('Oh no!, that is not a valid value. Try again...')
             print(err)
->>>>>>> Stashed changes
+
+
