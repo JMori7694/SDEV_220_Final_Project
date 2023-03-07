@@ -17,7 +17,7 @@ window.title('Number Guessing Game')
 window.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8], minsize=50, weight=1)
 window.columnconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8], minsize=50, weight=1)
 
-lbl = tk.Label(text='Would you like to play a number guessing game?')
+lbl = tk.Label(text='Start Game?')
 lbl.grid(row=0, columnspan=9)
 
 btn_y = tk.Button(
