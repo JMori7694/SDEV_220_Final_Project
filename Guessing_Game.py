@@ -10,10 +10,10 @@ import random
 
 def start_game():
     play: str = input(
-        'Would you like to play a number guessing game? (Enter yes or no)')
-    if play.lower == 'yes':
-        difficulty: str = input('Please enter Easy, Medium or Hard.')
-        if difficulty.lower == 'easy':
+        'Would you like to play a number guessing game? (Enter yes or no) ')
+    if play.lower() == 'yes':
+        difficulty: str = input('Please enter Easy, Medium or Hard. ')
+        if difficulty.lower() == 'easy':
             start_easy()
 #        elif difficulty.lower == 'medium':
 #            start_medium()
@@ -27,34 +27,36 @@ def start_game():
 # Easy: 1-10,
 
 
-games_easy = []
+n = 0
+games_easy = [n]
 wins_easy: int = 0
 loss_easy: int = 0
 
 
-def show_score_easy():
-    if not wins_easy and loss_easy:
-        print('No games have been played yet.')
-
-    elif not wins_easy:
-        print(f'You have lost ' + loss_easy +
-              ' game(s) out of ' + games_easy + ' game(s).')
-
-    elif not loss_easy:
-        print(f'You have won ' + wins_easy +
-              ' game(s) out of ' + {max(games_easy)} + ' game(s)')
-
-    else:
-        print(f'You have played ' + {max(games_easy)} + ' games with ' +
-              wins_easy + ' win(s) and ' + loss_easy + ' loss(es).')
-
-
 def start_easy():
+    global n, games_easy, wins_easy, loss_easy
     guesses_easy: int = 0
     rand_num = random.randint(1, 10)
     wanna_play: str = input(
         f'Are you ready to play the Easy level guessing game?'
         '(Enter Yes/No): ')
+    print("You have 3 guesses.")
+
+    def show_score_easy():
+        if wins_easy == 0 and loss_easy == 0:
+            print('No games have been played yet.')
+
+        elif wins_easy == 0 and loss_easy >= 1:
+            print(f'You have lost ' + str(loss_easy) +
+                  ' game(s) out of ' + str(max(games_easy)) + ' game(s).')
+
+        elif loss_easy == 0 and wins_easy >= 1:
+            print(f'You have won ' + str(wins_easy) +
+                  ' game(s) out of ' + str(max(games_easy)) + ' game(s)')
+
+        else:
+            print(f'You have played ' + str(max(games_easy)) + ' games with ' +
+                  str(wins_easy) + ' win(s) and ' + str(loss_easy) + ' loss(es).')
 
     if wanna_play.lower() != 'yes':
         print('Maybe next time!')
@@ -63,6 +65,12 @@ def start_easy():
         show_score_easy()
 
     while wanna_play.lower() == 'yes':
+        if guesses_easy == 3:
+            n += 1
+            games_easy.append(n)
+            loss_easy += 1
+            print('You ran out of guesses!')
+            return games_easy
         try:
             guess = int(input('Pick a number between 1 and 10: '))
             if guess < 1 or guess > 10:
@@ -72,13 +80,16 @@ def start_easy():
             guesses_easy += 1
 
             if guess == rand_num:
+                n += 1
+                wins_easy += 1
+                games_easy.append(n)
                 print('Nice! You got it!')
                 print(f'It took you {guesses_easy} attempts')
                 wanna_play = input(
                     'Would you like to play again? (Enter Yes/No): ')
                 if wanna_play.lower() != 'yes':
                     print('Later!')
-                    break
+                    return games_easy
                 else:
                     guesses_easy = 0
                     rand_num = random.randint(1, 10)
